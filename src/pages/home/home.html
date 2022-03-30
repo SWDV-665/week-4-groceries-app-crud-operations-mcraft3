@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar>
+    <!-- Angular Templates {{}} for Dynamic values on home.ts -->
+    <ion-title>{{ title }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+
+    <!-- Loop thru items array to display all items; assign index. -->
+    <ion-item-sliding *ngFor="let item of items; let i = index">
+      <ion-item>
+        <h2>{{ item.name }}</h2>
+        <p>{{ item.quantity }}</p>
+      </ion-item>
+      <ion-item-options>
+        <!-- Grab item/object to be removed and its index when selecting. -->
+        <button (click)="removeItem(item, i)" ion-button color="secondary" icon-start>
+          <ion-icon name="trash"></ion-icon>
+          Done
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+</ion-list>
+
+<ion-fab bottom right>
+  <button (click)="addItem()" ion-fab mini>
+    <ion-icon name="add"></ion-icon>
+  </button>
+</ion-fab>
+
+</ion-content>
