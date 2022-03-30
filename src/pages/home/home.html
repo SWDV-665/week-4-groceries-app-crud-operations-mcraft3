@@ -6,15 +6,27 @@
 </ion-header>
 
 <ion-content padding>
+
+  <!-- if list is empty, show no item message. -->
+  <h3 class="no-item" text-center *ngIf="loadItems().length === 0">
+    No item available on the list!
+  </h3>
+
   <ion-list>
 
     <!-- Loop thru items array to display all items; assign index. -->
-    <ion-item-sliding *ngFor="let item of items; let i = index">
+    <ion-item-sliding *ngFor="let item of loadItems(); let i = index">
       <ion-item>
         <h2>{{ item.name }}</h2>
         <p>{{ item.quantity }}</p>
       </ion-item>
       <ion-item-options>
+        <!-- Grab item/object to be edited and its index when selecting. -->
+        <button (click)="editItem(item, i)" ion-button color="primary" icon-start>
+          <ion-icon name="create"></ion-icon>
+          Edit
+        </button> 
+
         <!-- Grab item/object to be removed and its index when selecting. -->
         <button (click)="removeItem(item, i)" ion-button color="secondary" icon-start>
           <ion-icon name="trash"></ion-icon>
