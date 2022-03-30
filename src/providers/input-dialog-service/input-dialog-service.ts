@@ -20,45 +20,8 @@ export class InputDialogServiceProvider {
     console.log('Hello InputDialogServiceProvider Provider');
   }
 
-/*  
-    // Use Alert Controller Prompt to take input and add item to items array.
-    showAddItemPrompt() {
-      const prompt = this.alertCtrl.create({
-        title: 'Add Item',
-        message: "Please enter item...",
-        inputs: [
-          {
-            name: 'name',
-            placeholder: 'Name'
-          },
-          {
-            name: 'quantity',
-            placeholder: 'Quantity'
-          },
-        ],
-        buttons: [
-          {
-            text: 'Cancel',
-            handler: data  => {
-              console.log('Cancel clicked');
-            }
-          },
-          {
-            text: 'Save',
-            handler: item => {
-              console.log('Saved clicked', item);
-              // add new item to items array in grogeries-service.ts
-              this.dataService.items.push(item);
-            }
-          }
-        ]
-        });
-        prompt.present();
-      }
-*/
-
   // Use Alert Controller Prompt to add or edit existing item in items array.
-  // ? makes item optional for add case.
+  // ? makes item optional for add case. Ternary null operator for title, message and inputs.
   showPrompt(item?, index?) {
     const prompt = this.alertCtrl.create({
       // title: 'Edit Item'. if item, edit, if no item add
