@@ -4,6 +4,7 @@ import { ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 // Go up one extra level (add extra ../) to get app folder and back down to providers folder
 import { GroceriesServiceProvider } from '../../providers/groceries-service/groceries-service';
+import { InputDialogServiceProvider } from '../../providers/input-dialog-service/input-dialog-service';
 
 @Component({
   selector: 'page-home',
@@ -17,7 +18,8 @@ export class HomePage {
     public navCtrl: NavController,
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
-    public dataService: GroceriesServiceProvider
+    public dataService: GroceriesServiceProvider,
+    public inputDialogService: InputDialogServiceProvider
     ) {
 
   }
@@ -53,87 +55,13 @@ export class HomePage {
       duration: 3000
     });
     toast.present();
-    this.showEditItemPrompt(item, index);
+    this.inputDialogService.showPrompt(item, index);
   }
 
   // Add items using alertController.
   addItem() {
     console.log("Adding Item");
-    this.showAddItemPrompt();
+    this.inputDialogService.showPrompt();
   }
-
-  // Use Alert Controller Prompt to take input and add item to items array.
-  showAddItemPrompt() {
-    const prompt = this.alertCtrl.create({
-      title: 'Add Item',
-      message: "Please enter item...",
-      inputs: [
-        {
-          name: 'name',
-          placeholder: 'Name'
-        },
-        {
-          name: 'quantity',
-          placeholder: 'Quantity'
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: data  => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Save',
-          handler: item => {
-            console.log('Saved clicked', item);
-            // add new item to items array in grogeries-service.ts
-            this.dataService.items.push(item);
-          }
-        }
-      ]
-      });
-      prompt.present();
-    }
-
-  // Use Alert Controller Prompt to edit existing item in items array.
-  showEditItemPrompt(item, index) {
-    const prompt = this.alertCtrl.create({
-      title: 'Edit Item',
-      message: "Please edit item...",
-      inputs: [
-        {
-          name: 'name',
-          placeholder: 'Name',
-          // value: item.name. If item passed, use it, if not null.
-          value: item ? item.name : null
-        },
-        {
-          name: 'quantity',
-          placeholder: 'Quantity',
-          // value: item.quantity. If qty passed, use it, if not null.
-          value: item ? item.quantity : null
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: data  => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Save',
-          handler: item => {
-            console.log('Save clicked', item);
-            // Edit item in items array in groceries-service.ts
-            this.dataService.editItem(item, index);
-          }
-        }
-      ]
-      });
-      prompt.present();
-    }
 
 }
