@@ -49,14 +49,22 @@ export class HomePage {
       position: 'bottom',
       showCloseButton: true,
     });
-
     toast.onDidDismiss(() => {
       console.log('Dismissed toast');
     });
-
     toast.present();
     // Remove one object at given index.
     this.items.splice(index, 1);
+  }
+
+  editItem(item, index) {
+    console.log("Edit item - ", item, index);
+    const toast = this.toastCtrl.create({
+      message: 'Editing Item - ' + index + " ...",
+      duration: 3000
+    });
+    toast.present();
+    this.showEditItemPrompt(item, index);
   }
 
   addItem() {
@@ -92,6 +100,44 @@ export class HomePage {
             console.log('Saved clicked', item);
             // add new item to items array
             this.items.push(item);
+          }
+        }
+      ]
+      });
+      prompt.present();
+    }
+
+  // Use Alert Controller Prompt to edit existing item in items array.
+  showEditItemPrompt(item, index) {
+    const prompt = this.alertCtrl.create({
+      title: 'Edit Item',
+      message: "Please edit item...",
+      inputs: [
+        {
+          name: 'name',
+          placeholder: 'Name',
+          // value: item.name. If item passed, use it, if not null.
+          value: item ? item.name : null
+        },
+        {
+          name: 'quantity',
+          placeholder: 'Quantity',
+          // value: item.quantity. If qty passed, use it, if not null.
+          value: item ? item.quantity : null
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data  => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Save',
+          handler: item => {
+            console.log('Save clicked', item);
+            this.items[index] = item;
           }
         }
       ]

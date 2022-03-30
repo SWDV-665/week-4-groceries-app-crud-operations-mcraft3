@@ -15,6 +15,12 @@
         <p>{{ item.quantity }}</p>
       </ion-item>
       <ion-item-options>
+        <!-- Grab item/object to be edited and its index when selecting. -->
+        <button (click)="editItem(item, i)" ion-button color="primary" icon-start>
+          <ion-icon name="create"></ion-icon>
+          Edit
+        </button> 
+
         <!-- Grab item/object to be removed and its index when selecting. -->
         <button (click)="removeItem(item, i)" ion-button color="secondary" icon-start>
           <ion-icon name="trash"></ion-icon>
