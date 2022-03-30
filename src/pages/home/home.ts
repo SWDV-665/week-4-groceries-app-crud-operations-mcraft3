@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
+// Go up one extra level (add extra ../) to get app folder and back down to providers folder
+import { GroceriesServiceProvider } from '../../providers/groceries-service/groceries-service';
 
 @Component({
   selector: 'page-home',
@@ -11,32 +13,18 @@ export class HomePage {
   // Class variable for angular template of title of home.html page
   title = "Grocery";
 
-  // Array of items
-  items = [
-    {
-      name: "Milk",
-      quantity: 2 
-    },
-    {
-      name: "Bread",
-      quantity: 1 
-    },    
-    {
-      name: "Banana",
-      quantity: 3 
-    },
-    {
-      name: "Sugar",
-      quantity: 1 
-    },
-  ];
-
   constructor(
     public navCtrl: NavController,
     public toastCtrl: ToastController,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public dataService: GroceriesServiceProvider
     ) {
 
+  }
+
+  // Get and initialize items in dataService.
+  loadItems() {
+    return this.dataService.getItems();
   }
 
   // remove item with object and it's index as parameters.
@@ -54,9 +42,10 @@ export class HomePage {
     });
     toast.present();
     // Remove one object at given index.
-    this.items.splice(index, 1);
+    this.dataService.items.splice(index, 1);
   }
 
+  // Edit item with object and it's index as parameters.
   editItem(item, index) {
     console.log("Edit item - ", item, index);
     const toast = this.toastCtrl.create({
@@ -67,6 +56,7 @@ export class HomePage {
     this.showEditItemPrompt(item, index);
   }
 
+  // Add items using alertController.
   addItem() {
     console.log("Adding Item");
     this.showAddItemPrompt();
@@ -98,8 +88,8 @@ export class HomePage {
           text: 'Save',
           handler: item => {
             console.log('Saved clicked', item);
-            // add new item to items array
-            this.items.push(item);
+            // add new item to items array in grogeries-service.ts
+            this.dataService.items.push(item);
           }
         }
       ]
@@ -137,7 +127,8 @@ export class HomePage {
           text: 'Save',
           handler: item => {
             console.log('Save clicked', item);
-            this.items[index] = item;
+            // Edit item in items array in groceries-service.ts
+            this.dataService.editItem(item, index);
           }
         }
       ]
