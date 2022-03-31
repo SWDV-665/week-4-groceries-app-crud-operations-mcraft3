@@ -42,7 +42,7 @@ export class HomePage {
     });
     toast.present();
     // Remove one object at given index.
-    this.dataService.items.splice(index, 1);
+    this.dataService.removeItem(index);
   }
 
   // Edit item with object and it's index as parameters.
@@ -89,7 +89,7 @@ export class HomePage {
           handler: item => {
             console.log('Saved clicked', item);
             // add new item to items array in grogeries-service.ts
-            this.dataService.items.push(item);
+            this.dataService.addItem(item);
           }
         }
       ]
