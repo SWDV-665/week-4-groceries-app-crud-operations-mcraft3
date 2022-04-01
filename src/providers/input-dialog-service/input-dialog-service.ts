@@ -24,22 +24,22 @@ export class InputDialogServiceProvider {
   // ? makes item optional for add case. Ternary null operator for title, message and inputs.
   showPrompt(item?, index?) {
     const prompt = this.alertCtrl.create({
-      // title: 'Edit Item'. if item, edit, if no item add
+      // If item, edit, if no item add
       title: item ? 'Edit Item' : 'Add Item',
 
-      // message: "Please edit item...". if item, edit, if no item add
+      // If item, edit, if no item add
       message: item ? 'Please edit item...' : 'Please enter item...',
       inputs: [
         {
           name: 'name',
           placeholder: 'Name',
-          // value: item.name. If item passed, use it, if not null.
+          // If item passed, use it, if not null.
           value: item ? item.name : null
         },
         {
           name: 'quantity',
           placeholder: 'Quantity',
-          // value: item.quantity. If qty passed, use it, if not null.
+          // If qty passed, use it, if not null.
           value: item ? item.quantity : null
         },
       ],
@@ -60,7 +60,6 @@ export class InputDialogServiceProvider {
             }
             else {
               // add new item to items array. Moved to Groceries-service.ts.
-              //this.items.push(item);
               this.dataService.addItem(item);
             }
           }

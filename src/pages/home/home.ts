@@ -44,7 +44,7 @@ export class HomePage {
     });
     toast.present();
     // Remove one object at given index.
-    this.dataService.items.splice(index, 1);
+    this.dataService.removeItem(index);
   }
 
   // Edit item with object and it's index as parameters.
